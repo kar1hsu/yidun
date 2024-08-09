@@ -6,8 +6,6 @@ class BaseService
 {
     const API_URL = "http://as.dun.163.com";
 
-    const VERSION = 'v5.2';
-
     const INTERNAL_STRING_CHARSET = 'auto';
 
     const SIGNATURE_METHOD = 'MD5';
@@ -110,8 +108,7 @@ class BaseService
     {
         return [
             "secretId" => $this->config['secret_id'],
-            "businessId" => $this->config['business_id'],
-            "version" => self::VERSION,
+            "businessId" => $this->config['business_id'] ?? '',
             "timestamp" => time() * 1000,// time in milliseconds
             "nonce" => sprintf("%d", rand()), // random int
             "signatureMethod" => self::SIGNATURE_METHOD,

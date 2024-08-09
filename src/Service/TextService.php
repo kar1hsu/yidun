@@ -3,6 +3,7 @@ namespace Karlhsu\Yidun\Service;
 class TextService extends BaseService
 {
     const URL = '/v5/text/check';
+    const VERSION = 'v5.3';
     const TIMEOUT = 2;
 
     public function __construct($config) {
@@ -22,6 +23,7 @@ class TextService extends BaseService
      */
     public function check($params)
     {
+        $params['version'] = self::VERSION;
         $params = $this->toUtf8(array_merge($this->getCommonParams(), $params));
         $params["signature"] = $this->gen_signature($this->config['secret_key'], $params);
         $client = new \GuzzleHttp\Client(array_merge([
@@ -34,6 +36,6 @@ class TextService extends BaseService
         if ($this->checkResult($result)) {
             return $result['result'];
         }
-        return '失败';
+        throw new \Exception($result['msg']);
     }
 }

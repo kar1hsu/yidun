@@ -4,6 +4,7 @@ class AudioService extends BaseService
 {
     const URL = '/v2/audio/check';
     const SUBMIT_URL = '/v2/audio/submit';
+    const VERSION = 'v4.1';
     const TIMEOUT = 10;
 
 
@@ -28,6 +29,7 @@ class AudioService extends BaseService
      */
     public function check($params)
     {
+        $params['version'] = self::VERSION;
         $params = $this->toUtf8(array_merge($this->getCommonParams(), $params));
         $params["signature"] = $this->gen_signature($this->config['secret_key'], $params);
         $client = new \GuzzleHttp\Client(array_merge([
@@ -40,7 +42,7 @@ class AudioService extends BaseService
         if ($this->checkResult($result)) {
             return $result['result'];
         }
-        return '失败';
+        throw new \Exception($result['msg']);
     }
 
     /**
@@ -68,7 +70,7 @@ class AudioService extends BaseService
         if ($this->checkResult($result)) {
             return $result['result'];
         }
-        return '失败';
+        throw new \Exception($result['msg']);
     }
 
     /**
@@ -82,7 +84,7 @@ class AudioService extends BaseService
         if ($this->checkResult($result)) {
             return $result['result'];
         }
-        return '失败';
+        throw new \Exception($result['msg']);
     }
 
 }

@@ -3,6 +3,7 @@ namespace Karlhsu\Yidun\Service;
 class VideoService extends BaseService
 {
     const URL = '/v4/videosolution/submit';
+    const VERSION = 'v2.1';
     const TIMEOUT = 30;
 
 
@@ -22,6 +23,7 @@ class VideoService extends BaseService
      */
     public function submit($params)
     {
+        $params['version'] = self::VERSION;
         $params = [
             "callback" => json_encode(array_merge([
                 "type" => 'video'
@@ -40,7 +42,7 @@ class VideoService extends BaseService
         if ($this->checkResult($result)) {
             return $result['result'];
         }
-        return '失败';
+        throw new \Exception($result['msg']);
     }
 
     /**
@@ -54,6 +56,6 @@ class VideoService extends BaseService
         if ($this->checkResult($result)) {
             return $result['result'];
         }
-        return '失败';
+        throw new \Exception($result['msg']);
     }
 }
