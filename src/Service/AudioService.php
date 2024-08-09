@@ -52,12 +52,7 @@ class AudioService extends BaseService
      */
     public function submit($params)
     {
-        $params = [
-            "callback" => json_encode(array_merge([
-                "type" => 'audio'
-            ], $params['callback'] ?? []), JSON_UNESCAPED_UNICODE),
-            "callbackUrl" => $params['callback_url'] ?? $this->config['callback_url']
-        ];
+        $params['version'] = self::VERSION;
         $params = $this->toUtf8(array_merge($this->getCommonParams(), $params));
         $params["signature"] = $this->gen_signature($this->config['secret_key'], $params);
         $client = new \GuzzleHttp\Client(array_merge([
