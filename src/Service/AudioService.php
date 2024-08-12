@@ -2,8 +2,8 @@
 namespace Karlhsu\Yidun\Service;
 class AudioService extends BaseService
 {
-    const URL = '/v2/audio/check';
-    const SUBMIT_URL = '/v2/audio/submit';
+    const URL = '/v4/audio/check';
+    const SUBMIT_URL = '/v4/audio/submit';
     const VERSION = 'v4.1';
     const TIMEOUT = 10;
 
