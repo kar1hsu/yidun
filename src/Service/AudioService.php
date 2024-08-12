@@ -2,9 +2,10 @@
 namespace Karlhsu\Yidun\Service;
 class AudioService extends BaseService
 {
-    const URL = '/v4/audio/check';
+    const URL = '/v2/audio/check';
+    const VERSION = 'v2';
     const SUBMIT_URL = '/v4/audio/submit';
-    const VERSION = 'v4.1';
+    const SUBMIT_VERSION = 'v4.1';
     const TIMEOUT = 10;
 
 
@@ -52,7 +53,7 @@ class AudioService extends BaseService
      */
     public function submit($params)
     {
-        $params['version'] = self::VERSION;
+        $params['version'] = self::SUBMIT_VERSION;
         $params = $this->toUtf8(array_merge($this->getCommonParams(), $params));
         $params["signature"] = $this->gen_signature($this->config['secret_key'], $params);
         $client = new \GuzzleHttp\Client(array_merge([
